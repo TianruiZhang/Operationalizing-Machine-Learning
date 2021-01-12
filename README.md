@@ -1,9 +1,22 @@
 # Operationalizing Machine Learning
-
-This project uses Azure to configure, deploy and consume a cloud-based machine learning production model.
+## Overview
+This project not only uses Azure to configure, deploy and consume a cloud-based machine learning production model, but also creates, publishes and consumes a pipeline. It covers the following steps:
+1. Automated ML Experiment
+2. Deploy the best model
+3. Enable logging
+4. Consume model endpoints (via Swagger or REST URI)
+5. Create and publish a pipeline
 
 ## Architectural Diagram
 <img src="./assets/diagram.png" weight=723 height=318>
+
+## Suggested Improvement
+There is certainly room for improvement such as the followings:
+1. Consider using `AUC_weighted` or `weighted_accuracy` in stead of `accuracy` as the primary classification metric given the imbalanced nature of the Bankmarketing dataset.
+2. Right before the start of the automated ML experiment, on exit criterion, the default number of hours was reduced from 3 to 1 in order to save time and cost (please refer to the video link below for more details). However, this comes at the expense of model performance. This is not necessary if time and budget allow.
+3. AutoML is currently overhyped. To significantly improve model performance and make it more meaningful in practice, consider the followings:
+* Collecting more data based on domain knowledge. The purpose of this can be to increase sample size, introduce potentially more valuable features or fix data imbalance.
+* Carrying out more sophisticated feature selection or engineering based on domain knowledge will surely improve the model substantially.
 
 ## Key Steps
 ### Create an AutoML experiment to retrieve the best classifier. 
@@ -15,7 +28,7 @@ This step should be implemented through Microsoft Azure Machine Learning Studio 
 
 3. Create a new Automated ML experiment.
 4. Configure a new compute cluster (Virtual Machine Size: `Standard_DS12_v2`, Minimum number of nodes: `1`, Maximum number of nodes: `75` or as large as the quota allows)
-5. Run the experiment using *Classification*, ensure *Explain best model* is checked. On *Exit criterion*, reduce the *Concurrency* from default to `75`(in my case) (this number should always be less than the number of the compute cluster). Note: This process takes about 20 minutes.
+5. Run the experiment using *Classification*, ensure *Explain best model* is checked. On *Exit criterion*, reduce the *Concurrency* from default to `75` (in my case) (this number should always be less than the number of the compute cluster). Note: This process takes about 20 minutes.
 6. Wait until the experiment is shown as complete.
 
 <img src="./assets/step1.2.png">
@@ -92,4 +105,4 @@ This step should be implemented through Microsoft Azure Machine Learning Studio 
 <img src="./assets/step6.6.png">
 
 ## Screen Recording
-There is a video [link](https://youtu.be/7Jh9LikExjk) to the demonstration above.
+There is a video [link](https://youtu.be/-1xySQCNmBU) to the demonstration above.
